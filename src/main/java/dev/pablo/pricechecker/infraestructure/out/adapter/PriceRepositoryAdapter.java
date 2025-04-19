@@ -5,9 +5,10 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import dev.pablo.pricechecker.application.port.out.PriceRepositoryPort;
-import dev.pablo.pricechecker.domain.model.PriceFilterInput;
 import dev.pablo.pricechecker.domain.model.PriceEntity;
+import dev.pablo.pricechecker.domain.model.PriceFilterInput;
 import dev.pablo.pricechecker.domain.persistence.PriceSpecification;
 import dev.pablo.pricechecker.infraestructure.out.repository.PriceRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class PriceRepositoryAdapter implements PriceRepositoryPort {
 
   private final PriceRepository priceRepository;
 
+  @Transactional(readOnly = true)
   @Override
   public List<PriceEntity> findPricesBetweenDatesWithMaxPriority(PriceFilterInput inputData) {
     Specification<PriceEntity> priceSpecification =

@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class FindPriceInput {
+public class PriceFilterInput {
 
   private LocalDateTime priceDate;
 

@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import dev.pablo.pricechecker.application.port.out.PriceRepositoryPort;
-import dev.pablo.pricechecker.domain.model.FindPriceInput;
+import dev.pablo.pricechecker.domain.model.PriceFilterInput;
 import dev.pablo.pricechecker.domain.model.PriceEntity;
 import dev.pablo.pricechecker.domain.persistence.PriceSpecification;
 import dev.pablo.pricechecker.infraestructure.out.repository.PriceRepository;
@@ -19,7 +19,7 @@ public class PriceRepositoryAdapter implements PriceRepositoryPort {
   private final PriceRepository priceRepository;
 
   @Override
-  public List<PriceEntity> findPricesBetweenDatesWithMaxPriority(FindPriceInput inputData) {
+  public List<PriceEntity> findPricesBetweenDatesWithMaxPriority(PriceFilterInput inputData) {
     Specification<PriceEntity> priceSpecification =
         Specification.where(PriceSpecification.dateBetween(inputData.getPriceDate()))
             .and(PriceSpecification.withBrandId(inputData.getBrandId()))

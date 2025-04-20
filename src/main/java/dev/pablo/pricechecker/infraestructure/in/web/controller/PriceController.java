@@ -30,8 +30,9 @@ public class PriceController {
       @RequestParam(required = false,
           defaultValue = "#{T(java.time.LocalDateTime).now()}") @DateTimeFormat(
               iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
-      @RequestParam(required = false) String brandId,
-      @RequestParam(required = false) String productId, @PageableDefault Pageable pageable) {
+      @RequestParam(required = false, name = "brand_id") String brandId,
+      @RequestParam(required = false, name = "product_id") String productId,
+      @PageableDefault Pageable pageable) {
     PriceFilterInput priceFilterInput =
         priceControllerMapper.requestToPriceFilterInput(date, brandId, productId, pageable);
     List<PriceEntity> prices =

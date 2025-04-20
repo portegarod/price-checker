@@ -8,6 +8,7 @@ class PriceCheckerApplicationTests {
 
 	@Test
 	void contextLoads() {
+      // Assert that project loads without errors
 	}
 
 }

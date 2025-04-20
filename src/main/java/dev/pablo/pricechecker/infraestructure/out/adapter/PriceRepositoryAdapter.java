@@ -3,6 +3,8 @@ package dev.pablo.pricechecker.infraestructure.out.adapter;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +30,11 @@ public class PriceRepositoryAdapter implements PriceRepositoryPort {
             .and(PriceSpecification.withProductId(inputData.getProductId()))
             .and(PriceSpecification.withMaxPriority(inputData.getPriceDate()));
 
-    return Optional.ofNullable(priceRepository.findAll(priceSpecification))
+    Pageable pageable = Optional.ofNullable(inputData.getPageInput())
+        .map(pageInput -> PageRequest.of(pageInput.getPage(), pageInput.getSize()))
+        .orElse(PageRequest.of(0, 10));
+
+    return Optional.ofNullable(priceRepository.findAll(priceSpecification, pageable).getContent())
         .filter(list -> !list.isEmpty()).orElseThrow(NoSuchElementException::new);
   }
 

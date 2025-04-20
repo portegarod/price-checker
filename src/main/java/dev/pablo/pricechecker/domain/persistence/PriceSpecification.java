@@ -53,14 +53,12 @@ public class PriceSpecification {
           equalBetweenRoots(criteriaBuilder, root, subRoot, PRODUCT_ID_COLUMN);
       Predicate dateBetween = dateBetween(criteriaBuilder, subRoot, date);
 
-
       subquery.select(criteriaBuilder.max(subRoot.get(PRIORITY_COLUMN)));
       subquery.where(equalBrandId, equalProductId, dateBetween);
 
       return criteriaBuilder.equal(root.get(PRIORITY_COLUMN), subquery);
     };
   }
-
 
   private static <T> Predicate equalPredicate(CriteriaBuilder criteriaBuilder,
       Root<PriceEntity> root, String column, T field) {

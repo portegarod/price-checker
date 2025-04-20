@@ -5,17 +5,18 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueMappingStrategy;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Pageable;
 import dev.pablo.pricechecker.domain.model.PriceEntity;
 import dev.pablo.pricechecker.domain.model.PriceFilterInput;
 import dev.pablo.pricechecker.infraestructure.in.web.dto.PriceFilterResponse;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.WARN,
-    nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
+    nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT,
+    uses = CommonControllerMapper.class)
 public interface PriceControllerMapper {
 
   List<PriceFilterResponse> priceEntityListToPriceFilterResponseList(List<PriceEntity> priceEntity);
 
   PriceFilterInput requestToPriceFilterInput(LocalDateTime priceDate, String brandId,
-      String productId);
-
+      String productId, Pageable pageInput);
 }

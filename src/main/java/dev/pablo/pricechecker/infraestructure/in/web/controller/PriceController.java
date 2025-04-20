@@ -2,6 +2,8 @@ package dev.pablo.pricechecker.infraestructure.in.web.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +31,9 @@ public class PriceController {
           defaultValue = "#{T(java.time.LocalDateTime).now()}") @DateTimeFormat(
               iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
       @RequestParam(required = false) String brandId,
-      @RequestParam(required = false) String productId) {
+      @RequestParam(required = false) String productId, @PageableDefault Pageable pageable) {
     PriceFilterInput priceFilterInput =
-        priceControllerMapper.requestToPriceFilterInput(date, brandId, productId);
+        priceControllerMapper.requestToPriceFilterInput(date, brandId, productId, pageable);
     List<PriceEntity> prices =
         priceServicePort.findPricesBetweenDatesWithMaxPriority(priceFilterInput);
     return priceControllerMapper.priceEntityListToPriceFilterResponseList(prices);

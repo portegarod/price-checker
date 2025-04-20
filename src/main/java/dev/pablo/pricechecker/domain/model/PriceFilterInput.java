@@ -14,4 +14,5 @@ public class PriceFilterInput {
 
   private String productId;
 
+  private PageInput pageInput;
 }
